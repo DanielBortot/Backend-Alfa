@@ -34,7 +34,7 @@ $ npm install
 
 ## .env
 
-Transformar el archivo ".env.template" a ".env" y llenar las variables.
+Crear el archivo ".env" usando las variables de ".env.template" y llenar las variables.
 
 - PORT - 3000 por defecto
 
