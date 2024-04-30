@@ -37,6 +37,28 @@ $ npm install
 Crear el archivo ".env" usando las variables de ".env.template" y llenar las variables.
 
 - PORT - 3000 por defecto
+- DB_HOST
+- DB_PORT
+- DB_USERNAME
+- DB_PASSWORD
+- DB_NAME
+- PG_EMAIL
+- PG_PASSWORD
+
+## Running the database
+
+```bash
+# primera ejecucion (descargara e inicializara la base de datos)
+$ docker-compose up -d
+
+# si ya se ha realizado el paso anterior con anterioridad
+$ docker-compose start -d
+
+# para detener el contenedor
+$ docker-compose stop
+
+# dentro de docker desktop se puede hacer start, stop y borrar contenedores de forma grafica
+```
 
 ## Running the app
 
