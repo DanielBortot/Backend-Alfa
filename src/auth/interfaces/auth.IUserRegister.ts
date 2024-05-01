@@ -1,7 +1,11 @@
-import { CreateUserDto } from "../dto";
+import { CreateUserDto, LoginUserDto } from "../dto";
+import { User } from "../entities/user.entity";
+import { loggedUser } from "../types/loggedUser.type";
 
 export interface IDatabaseConnection {
-  registerUser(createUserDto: CreateUserDto): boolean;
+  registerUser(createUserDto: CreateUserDto): Promise<loggedUser>;
 
-  checkExistingPassword(password: string): boolean;
+  loginUser(loginUserDto: LoginUserDto): Promise<loggedUser>
+
+  checkExistingEmail(email: string): Promise<User | null>;
 }
