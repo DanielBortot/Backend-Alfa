@@ -1,25 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto, UpdateAuthDto } from './dto';
-
+import { CreateUserDto, LoginUserDto, UpdateAuthDto } from './dto';
+import { IDatabaseConnection } from './interfaces/auth.IUserRegister';
+import { PgUserHandler } from './implementations/auth.pgUserRegister';
+import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { User } from './entities/user.entity';
+import { loggedUser } from './types/loggedUser.type';
+import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateUserDto) {
-    return 'This action adds a new auth';
+  private readonly users: Repository<User>;
+  private readonly jwtService: JwtService;
+
+  constructor(@InjectRepository(User) users: Repository<User>, jwtService: JwtService) {
+    this.users = users;
+    this.jwtService = jwtService;
   }
 
-  findAll() {
-    return `This action returns all auth`;
+  async registerUser(createAuthDto: CreateUserDto): Promise<loggedUser> {
+    let register: IDatabaseConnection = new PgUserHandler(this.users, this.jwtService);
+    //TODO: Verificar Email y fuerza de contraseña antes de registrar al usuario (Posible clase ValidarContraseña)
+    return register.registerUser(createAuthDto);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+  async loginUser(loginAuthDto: LoginUserDto): Promise<loggedUser> {
+    let login: IDatabaseConnection = new PgUserHandler(this.users, this.jwtService);
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    return login.loginUser(loginAuthDto);
   }
 }
