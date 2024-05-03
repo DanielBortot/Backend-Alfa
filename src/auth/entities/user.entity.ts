@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ComentaryEntity } from "src/post/infrastructurre/entities/comentary.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('user')
 export class User {
@@ -16,4 +17,10 @@ export class User {
 
     @Column('varchar', {length: 11})
     phone: string;
+
+    @OneToMany(
+        () => ComentaryEntity,  comentary => comentary.user
+    )
+    comentaries: string[]
+
 }
