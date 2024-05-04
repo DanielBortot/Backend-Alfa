@@ -44,6 +44,9 @@ Crear el archivo ".env" usando las variables de ".env.template" y llenar las var
 - DB_NAME
 - PG_EMAIL
 - PG_PASSWORD
+- CLOUDINARY_NAME
+- CLOUDINARY_API_KEY
+- CLOUDINARY_API_SECRET
 
 ## Running the database
 
