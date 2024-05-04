@@ -2,15 +2,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './category.entity';
-import { CategoryRepository } from './category.repository';
 import { CreateCategoryDto } from './dto/create-category.dto';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CategoryService {
 
     constructor(
         @InjectRepository(Category)
-        private categoryRepository: CategoryRepository<Category>,
+        private categoryRepository: Repository<Category>,
     ){};
 
     async createCategory(createCatekDto: CreateCategoryDto):Promise<Category>{
@@ -32,7 +32,7 @@ export class CategoryService {
         const found = await this.categoryRepository.findOne({where: {id: ids} });
 
         if(!found){
-         throw new NotFoundException(`Task with /${ids}/ is not Found`);
+            throw new NotFoundException(`Task with /${ids}/ is not Found`);
         }else{
             return found;
         } 
@@ -43,10 +43,9 @@ export class CategoryService {
         console.log('se elimino la categoria');
         console.log(result);
         
-       if (result.affected === 0){
-        throw new NotFoundException(`Category with /${id}/ is not Found`);
-       }
-       
+        if (result.affected === 0){
+            throw new NotFoundException(`Category with /${id}/ is not Found`);
+        }
     }
 
 
