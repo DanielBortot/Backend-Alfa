@@ -42,4 +42,9 @@ export class VideoController {
   getVideos(@Body() curso: GetVideosDto) {
     return this.videoService.getVideos(curso);
   }
+
+  @Delete('delVideo/:id')
+  deleteVideo(@Param('id') id: string) {
+    return this.videoService.deleteVideo(id)
+  }
 }
