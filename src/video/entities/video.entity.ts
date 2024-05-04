@@ -16,4 +16,7 @@ export class Video {
 
     @Column()
     id_curso: string;
+
+    @Column()
+    public_id: string;
 }
