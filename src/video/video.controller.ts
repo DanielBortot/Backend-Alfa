@@ -3,8 +3,9 @@ import { VideoService } from './video.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { GetVideosDto } from './dto/get-videos.dto';
 import { UploadVideoDto } from './dto/upload-video.dto';
-import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Video')
 @Controller('video')
 export class VideoController {
   constructor(private readonly videoService: VideoService) {}
