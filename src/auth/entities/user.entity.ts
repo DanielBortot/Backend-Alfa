@@ -1,4 +1,4 @@
-import { ComentaryEntity } from "src/post/infrastructurre/entities/comentary.entity";
+import { ComentaryEntity } from "src/post/infrastructure/entities/comentary.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('user')
