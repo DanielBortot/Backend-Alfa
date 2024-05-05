@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Video } from "./videoPlaceholder.entity";
 import { Category } from "./categoryPlaceholder.entity";
+import { Image } from "./imagePlaceholder.entity";
 
 
 @Entity('course')
@@ -22,6 +23,10 @@ export class Course {
 
   @Column()
   minutes:number;
+
+  @OneToOne(type => Image)
+  @JoinColumn()
+  image:Image;
 
   @ManyToOne(type => Category, category => category.courses)
   category:Category;

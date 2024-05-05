@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsString } from "class-validator";
+import { IsNumber, IsString, isNumber } from "class-validator";
 import { Category } from "../entities/categoryPlaceholder.entity";
 
 export class newCourseDto {
@@ -20,7 +20,10 @@ export class newCourseDto {
   weeks:number;
 
   @ApiProperty()
-  category: Category;
+  @IsString()
+  categoryId: string;
+
+  
 
   //? Considero que al crear un curso este debe estar vacío
   //? Los videos deberían añadirse uno por uno y los minutos se irán actualizando

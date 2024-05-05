@@ -3,6 +3,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { newCourseDto } from './dto/newCourse.Dto';
 import { CourseService } from './course.service';
 import { Course } from './entities/course.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Category } from './entities/categoryPlaceholder.entity';
+import { Repository } from 'typeorm';
 
 
 ApiTags("Course")
@@ -11,14 +14,14 @@ export class CourseController {
 
   constructor(private readonly courseService:CourseService){}
 
-  @Post("course")
+  @Post("")
   createNewCourse(@Body() newCourseDto:newCourseDto): Promise<Course> {
     return this.courseService.createNewCourse(newCourseDto);
   }
 
   @Get("courses")
   findAllCourses():Promise<Course[]> {
-    
+    return this.courseService.findAll();
   }
 
 

@@ -1,8 +1,10 @@
-import { Column, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Course } from "./course.entity";
+import { Image } from "./imagePlaceholder.entity";
 
+@Entity("categoryPlaceholder")
 export class Category {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -11,9 +13,10 @@ export class Category {
   @Column()
   description: string;
 
-  @Column()
-  iconURL: string;
+  @OneToOne(type => Image)
+  @JoinColumn()
+  Icon: Image;
   
-  @ManyToOne(type => Course, course => course.category)
+  @OneToMany(type => Course, course => course.category)
   courses: Course[];
 }
