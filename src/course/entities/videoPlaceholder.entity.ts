@@ -10,7 +10,7 @@ export class Video {
   title: string;
 
   @Column()
-  Url: string;
+  url: string;
 
   @Column()
   time: number;
