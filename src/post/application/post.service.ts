@@ -9,7 +9,7 @@ export class PostService {
   };
 
   findOnePost(id: string) {
-    return id;
+    return this.postRepository.findOnePost(id) ;
   };
 
 }
