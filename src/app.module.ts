@@ -4,7 +4,6 @@ import { DatabaseModule } from './database/database.module';
 import { VideoModule } from './video/video.module';
 import { AuthModule } from './auth/auth.module';
 import { BlogModule } from './blog/blog.module';
-import { BlogController } from './controller/blog/blog.controller';
 
 @Module({
   imports: [
@@ -12,9 +11,9 @@ import { BlogController } from './controller/blog/blog.controller';
     DatabaseModule,
     VideoModule,
     AuthModule,
-    BlogModule
+    BlogModule,
   ],
-  controllers: [BlogController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}
