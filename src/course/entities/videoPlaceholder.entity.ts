@@ -15,6 +15,6 @@ export class Video {
   @Column()
   time: number;
 
-  @ManyToOne(type => Course, course => course.videos)
+  @ManyToOne(type => Course, course => course.videos, {onDelete: "CASCADE"})
   course: Course;
 }

@@ -6,6 +6,6 @@ export class Image {
   id: string;
 
   @Column()
-  Url: string;
+  url: string;
 
 }
