@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prefer-const */
+/* eslint-disable prettier/prettier */
 import { Repository } from "typeorm";
 import { CreateUserDto, LoginUserDto } from "../dto";
 import { IDatabaseConnection as IUserHandler } from "../interfaces/auth.IUserRegister";

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('user')
@@ -16,4 +17,7 @@ export class User {
 
     @Column('varchar', {length: 11})
     phone: string;
+
+    @Column()
+    verificationCode:string;
 }
