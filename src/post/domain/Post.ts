@@ -7,7 +7,8 @@ export class Post {
         public description: string, 
         public imageURL: string, 
         public publication_date: Date, 
-        public tags: string[], 
-        public comentaries: string[]){
+        // public comentaries?: string[],
+         public tags: string[], 
+       ){
     }
 }

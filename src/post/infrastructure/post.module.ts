@@ -3,14 +3,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { PostEntity } from './entities/post.entity';
+import { PostsEntity } from './entities/posts.entity';
 import { ComentaryEntity } from './entities/comentary.entity';
 import { PostController } from './post.controller';
+import { TagEntity } from './entities/tag.entity';
+import { PostTagEntity } from './entities/post_tag.entity';
 
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([PostEntity, ComentaryEntity]),
+    TypeOrmModule.forFeature([PostsEntity, ComentaryEntity, TagEntity, PostTagEntity]),
     PassportModule,
     ConfigModule,
   ],

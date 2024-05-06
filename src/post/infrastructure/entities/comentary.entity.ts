@@ -1,6 +1,6 @@
 import { User } from "src/auth/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { PostEntity } from './post.entity';
+import { PostsEntity } from './posts.entity';
 
 
 @Entity('comentary')
@@ -21,7 +21,7 @@ export class ComentaryEntity {
     user: string;
 
     @ManyToOne(
-        () => PostEntity, post => post.id
+        () => PostsEntity, post => post.id
     )
     post: string; 
 

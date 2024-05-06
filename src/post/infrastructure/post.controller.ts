@@ -21,6 +21,8 @@ export class PostController {
     @Get("/:id")
     async findOnePost(@Param('id', ParseUUIDPipe) id: string){
         return this.postService.findOnePost(id)
-    }
+    };
+    
+    
   }
 
