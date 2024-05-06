@@ -3,8 +3,9 @@ import { VideoService } from './video.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { GetVideosDto } from './dto/get-videos.dto';
 import { UploadVideoDto } from './dto/upload-video.dto';
-import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Video')
 @Controller('video')
 export class VideoController {
   constructor(private readonly videoService: VideoService) {}
@@ -40,5 +41,10 @@ export class VideoController {
   @Post('getVideos')
   getVideos(@Body() curso: GetVideosDto) {
     return this.videoService.getVideos(curso);
+  }
+
+  @Delete('delVideo/:id')
+  deleteVideo(@Param('id') id: string) {
+    return this.videoService.deleteVideo(id)
   }
 }
