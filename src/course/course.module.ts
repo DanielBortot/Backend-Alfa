@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { CourseController } from './course.controller';
-import { CourseService } from './course.service';
+import { CourseController } from './infrastructure/controller/course.controller';
+import { CourseService } from './application/services/course.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Course } from './entities/course.entity';
-import { Category } from './entities/categoryPlaceholder.entity';
-import { Video } from './entities/videoPlaceholder.entity';
-import { Image } from './entities/imagePlaceholder.entity';
+import { Course } from './domain/course.entity';
+import { Category } from './domain/categoryPlaceholder.entity';
+import { Video } from './domain/videoPlaceholder.entity';
+import { Image } from './domain/imagePlaceholder.entity';
 
 @Module({
   imports: [

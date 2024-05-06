@@ -1,8 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsString, isNumber } from "class-validator";
-import { Category } from "../entities/categoryPlaceholder.entity";
+import { IsNumber, IsString } from "class-validator";
 
-export class newCourseDto {
+export class NewCourseDto {
   @ApiProperty()
   @IsString()
   name:string;

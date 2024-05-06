@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { newCourseDto } from './dto/newCourse.Dto';
+import { NewCourseDto } from '../dto/newCourse.Dto';
 import { Repository } from 'typeorm';
-import { Course } from './entities/course.entity';
+import { Course } from '../../domain/course.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from './entities/categoryPlaceholder.entity';
-import { Video } from './entities/videoPlaceholder.entity';
-import { Image } from './entities/imagePlaceholder.entity';
+import { Category } from '../../domain/categoryPlaceholder.entity';
+import { Video } from '../../domain/videoPlaceholder.entity';
+import { Image } from '../../domain/imagePlaceholder.entity';
+import { AddVideoDto } from '../dto/addVideo.Dto';
+import { SetImageDto } from '../dto/setImage.Dto';
 
 @Injectable()
 export class CourseService {
@@ -26,7 +28,7 @@ export class CourseService {
 
   //TODO: El tema de tener todos los servicios en un solo lado va en contra de hexagonal
 
-  async createNewCourse(newCourseDto: newCourseDto): Promise<Course> {
+  async createNewCourse(newCourseDto: NewCourseDto): Promise<Course> {
     
     let newCourse:Course = new Course();
     newCourse.name = newCourseDto.name;
@@ -39,9 +41,9 @@ export class CourseService {
     return this.courses.save(newCourse);
   }
 
-  async addVideo(courseId: string, videoId: string): Promise<Course> {
-    let course:Course = await this.courses.findOneBy({id : courseId});
-    let video:Video = await this.videos.findOneBy({id: videoId})
+  async addVideo(addVideoDto: AddVideoDto): Promise<Course> {
+    let course:Course = await this.courses.findOneBy({id : addVideoDto.courseId});
+    let video:Video = await this.videos.findOneBy({id: addVideoDto.videoId})
 
     if (course === null) {
       return null;
@@ -63,9 +65,9 @@ export class CourseService {
     return this.courses.save(course);
   }
 
-  async setImage(courseId: string, imageId: string) {
-    let course: Course = await this.courses.findOneBy({ id : courseId});
-    let image: Image = await this.images.findOneBy({ id : imageId});
+  async setImage(setImageDto: SetImageDto) {
+    let course: Course = await this.courses.findOneBy({ id : setImageDto.courseId});
+    let image: Image = await this.images.findOneBy({ id : setImageDto.imageId});
 
     if (course === null) {
       return null;

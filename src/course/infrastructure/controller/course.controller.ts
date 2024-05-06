@@ -1,8 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { newCourseDto } from './dto/newCourse.Dto';
-import { CourseService } from './course.service';
-import { Course } from './entities/course.entity';
+import { NewCourseDto as NewCourseDto } from '../../application/dto/newCourse.Dto';
+import { CourseService } from '../../application/services/course.service';
+import { Course } from '../../domain/course.entity';
+import { AddVideoDto} from 'src/course/application/dto/addVideo.Dto';
+import { SetImageDto} from 'src/course/application/dto/setImage.Dto';
 
 
 ApiTags("Course")
@@ -12,18 +14,18 @@ export class CourseController {
   constructor(private readonly courseService:CourseService){}
 
   @Post("")
-  createNewCourse(@Body() newCourseDto:newCourseDto): Promise<Course> {
+  createNewCourse(@Body() newCourseDto: NewCourseDto): Promise<Course> {
     return this.courseService.createNewCourse(newCourseDto);
   }
 
-  @Patch(":courseId/video/:videoId")
-  addVideoToCourse(@Param('courseId') courseId: string, @Param('videoId') videoId: string): Promise<Course> {
-    return this.courseService.addVideo(courseId, videoId);
+  @Patch("/video")
+  addVideoToCourse(@Body() addVideoDto: AddVideoDto): Promise<Course> {
+    return this.courseService.addVideo(addVideoDto);
   }
 
-  @Patch(":courseId/image/:imageId")
-  setCourseImage(@Param("courseId") courseId: string, @Param('imageId') imageId: string): Promise<Course> {
-    return this.courseService.setImage(courseId, imageId);
+  @Patch("/image")
+  setCourseImage(@Body() setImageDto: SetImageDto): Promise<Course> {
+    return this.courseService.setImage(setImageDto);
   }
 
   @Get("all")
