@@ -1,12 +1,41 @@
 version: '3'
 
 services:
+
+  app:
+
+    build:
+      context: .
+      target: dev
+      dockerfile: Dockerfile
+      
+    volumes:
+      - .:/app/
+      - /app/node_modules
+
+    container_name: backend-alfa
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - PORT=${PORT}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - PG_EMAIL=${PG_EMAIL}
+      - PG_PASSWORD=${PG_PASSWORD}
+      - JWT=${JWT}
+      - CLOUDINARY_NAME=${CLOUDINARY_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+
   postgres:
     image: postgres:16
     container_name: test
     environment:
       - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USERname}
+      - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
       - '5432:5432'
