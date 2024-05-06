@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { VideoModule } from './video/video.module';
 import { AuthModule } from './auth/auth.module';
+import { NotifyModule } from './notify/notify.module';
 import { BlogModule } from './blog/blog.module';
 import { CategoryModule } from './category/category.module';
 
@@ -13,6 +14,7 @@ import { CategoryModule } from './category/category.module';
     CategoryModule,
     VideoModule,
     AuthModule,
+    NotifyModule,
     BlogModule,
   ],
   controllers: [],
