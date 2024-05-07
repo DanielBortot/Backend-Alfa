@@ -22,7 +22,8 @@ export class PostMapper {
             // post.comentaries,
             // post.tags
         );
-    }ß
+    }
+    
 
     // static toPersistence(post: Post): any {
     //     return {
