@@ -1,6 +1,5 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import {UploadApiErrorResponse, UploadApiResponse, v2 as cloudinary} from 'cloudinary';
-import { Either } from 'src/genericTypes/either';
 
 export type CloudinaryResponse = UploadApiResponse | UploadApiErrorResponse;
 

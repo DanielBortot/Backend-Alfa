@@ -7,10 +7,11 @@ import { VideoP } from './domain/videoPlaceholder.entity';
 import { Image } from 'src/image/domain/image.entity';
 import { CategoryP } from './domain/categoryPlaceholder.entity';
 import { ImageP } from './domain/imagePlaceholder.entity';
+import { Video } from 'src/video/entities/video.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Course, CategoryP, VideoP, Image])
+    TypeOrmModule.forFeature([Course, CategoryP, Video, Image])
   ],
   controllers: [CourseController],
   providers: [CourseService]
