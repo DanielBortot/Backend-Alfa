@@ -1,9 +1,9 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Course } from "./course.entity";
-import { Image } from "./imagePlaceholder.entity";
+import { Image } from "src/image/domain/image.entity";
 
 @Entity("categoryPlaceholder")
-export class Category {
+export class CategoryP {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

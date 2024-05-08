@@ -14,7 +14,7 @@ export class Video {
   @Column()
   tiempo: number;
 
-  @Column()
+  @Column() //? Creo que sería bueno añadir las relaciones a curso por este lado, y añadirle un OnDelete: Cascade
   id_curso: string;
 
   @Column()

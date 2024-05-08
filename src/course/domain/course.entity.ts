@@ -1,7 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Video } from "./videoPlaceholder.entity";
-import { Category } from "./categoryPlaceholder.entity";
-import { Image } from "./imagePlaceholder.entity";
+import { VideoP } from "./videoPlaceholder.entity";
+import { Image } from "src/image/domain/image.entity";
+import { CategoryP } from "./categoryPlaceholder.entity";
+import { Video } from "src/video/entities/video.entity";
 
 
 @Entity('course')
@@ -28,9 +29,9 @@ export class Course {
   @JoinColumn()
   image:Image;
 
-  @ManyToOne(type => Category, category => category.courses)
-  category:Category;
+  @ManyToOne(type => CategoryP, category => category.courses)
+  category:CategoryP;
 
-  @OneToMany(type => Video, video => video.course)
-  videos: Video[];
+  @OneToMany(type => Video, video => video.id_curso)
+  videos: Video[]
 }
