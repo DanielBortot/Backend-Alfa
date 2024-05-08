@@ -12,13 +12,19 @@ export class PgVideo implements IDatabaseConnection {
         this.videos = videos;
     }
 
-    uploadVideo(info: UploadVideoDto, url: string): Promise<Video> {
-        const newVideo = this.videos.create({...info, url})
+    uploadVideo(info: UploadVideoDto, url: string, public_id: string): Promise<Video> {
+        const newVideo = this.videos.create({...info, url, public_id})
         return this.videos.save(newVideo);
     }
 
     getVideos(curso: GetVideosDto): Promise<Video[]> {
         return this.videos.findBy({id_curso: curso.id_curso});
+    }
+
+    async deleteVideo(id: string): Promise<Video> {
+        const video = await this.videos.findOneBy({id});
+        await this.videos.delete({id});
+        return video;
     }
 
 }
