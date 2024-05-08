@@ -57,6 +57,12 @@ export class CategoryService {
         } 
     }
 
+    async getCategorys(): Promise<Category[]>{
+        const query = this.categoryRepository.createQueryBuilder('category');
+        const categorys = await query.getMany();
+        return categorys;
+    }
+
     async deleteCategory(id: string): Promise<void>{
         const result = await this.categoryRepository.delete({id: id});
         console.log('se elimino la categoria');
