@@ -27,6 +27,8 @@ export class CategoryService {
 
     }
 
+
+
     async getCategoryById(ids: string) : Promise<Category>{
 
         const found = await this.categoryRepository.findOne({where: {id: ids} });
@@ -36,6 +38,12 @@ export class CategoryService {
         }else{
             return found;
         } 
+    }
+
+    async getCategorys(): Promise<Category[]>{
+        const query = this.categoryRepository.createQueryBuilder('category');
+        const categorys = await query.getMany();
+        return categorys;
     }
 
     async deleteCategory(id: string): Promise<void>{

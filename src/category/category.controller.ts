@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -14,6 +15,11 @@ export class CategoryController {
   @Post()
   createTask(@Body() createCategoryDto: CreateCategoryDto): Promise<Category> {
     return this.categoryService.createCategory(createCategoryDto);
+  }
+
+  @Get()
+  getAllCategory(): Promise<Category[]>{
+    return this.categoryService.getCategorys();
   }
 
   @Get('/:id')
