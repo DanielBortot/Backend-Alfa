@@ -3,6 +3,7 @@ import { VideoP } from "./videoPlaceholder.entity";
 import { Image } from "src/image/domain/image.entity";
 import { CategoryP } from "./categoryPlaceholder.entity";
 import { Video } from "src/video/entities/video.entity";
+import { Category } from "src/category/category.entity";
 
 
 @Entity('course')
@@ -29,8 +30,8 @@ export class Course {
   @JoinColumn()
   image:Image;
 
-  @ManyToOne(type => CategoryP, category => category.courses)
-  category:CategoryP;
+  @ManyToOne(type => Category, category => category.courses)
+  category: Category;
 
   @OneToMany(type => Video, video => video.id_curso)
   videos: Video[]

@@ -4,10 +4,11 @@ import { CategoryController } from './category.controller';
 import { CategoryService } from './category.service';
 import { Category } from './category.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Image } from 'src/image/domain/image.entity';
 
 
 @Module({
-    imports:[TypeOrmModule.forFeature([Category])],
+    imports:[TypeOrmModule.forFeature([Category, Image])],
     controllers:[CategoryController],
     providers:[CategoryService]
 })
