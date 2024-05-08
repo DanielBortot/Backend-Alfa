@@ -32,7 +32,7 @@ export class CourseController {
   getAllCourses():Promise<Course[]> {
     return this.courseService.findAll();
   }
-
+  
   @Get(":id")
   getCourseById(@Param('id') id: string):Promise<Course> {
     return this.courseService.findById(id);

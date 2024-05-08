@@ -38,7 +38,7 @@ export class VideoController {
       return this.videoService.uploadFile(file, info)
   }
 
-  @Post('getVideos')
+  @Post('getVideos') //? Post o Get?
   getVideos(@Body() curso: GetVideosDto) {
     return this.videoService.getVideos(curso);
   }

@@ -8,6 +8,7 @@ import { CourseModule } from './course/course.module';
 import { NotifyModule } from './notify/notify.module';
 import { BlogModule } from './blog/blog.module';
 import { CategoryModule } from './category/category.module';
+import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CategoryModule } from './category/category.module';
     AuthModule,
     NotifyModule,
     BlogModule,
+    ImageModule,
   ],
   controllers: [],
   providers: [],

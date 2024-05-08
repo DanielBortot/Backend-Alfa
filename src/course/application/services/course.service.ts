@@ -3,21 +3,23 @@ import { NewCourseDto } from '../dto/newCourse.Dto';
 import { Repository } from 'typeorm';
 import { Course } from '../../domain/course.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from '../../domain/categoryPlaceholder.entity';
-import { Video } from '../../domain/videoPlaceholder.entity';
-import { Image } from '../../domain/imagePlaceholder.entity';
+import { VideoP } from '../../domain/videoPlaceholder.entity';
+import { Image } from 'src/image/domain/image.entity';
 import { AddVideoDto } from '../dto/addVideo.Dto';
 import { SetImageDto } from '../dto/setImage.Dto';
+import { CategoryP } from 'src/course/domain/categoryPlaceholder.entity';
+import { Video } from 'src/video/entities/video.entity';
 
 @Injectable()
 export class CourseService {
   private readonly courses: Repository<Course>;
-  private readonly categories: Repository<Category>;
+  private readonly categories: Repository<CategoryP>;
   private readonly videos: Repository<Video>;
   private readonly images: Repository<Image>;
+  //TODO: Arreglar las entidades necesarias para el curso y conectar
 
   constructor(@InjectRepository(Course) courses: Repository<Course>, 
-              @InjectRepository(Category) categories: Repository<Category>,
+              @InjectRepository(CategoryP) categories: Repository<CategoryP>,
               @InjectRepository(Video) videos: Repository<Video>,
               @InjectRepository(Image) images: Repository<Image>) {
     this.courses = courses;
@@ -30,14 +32,15 @@ export class CourseService {
 
   async createNewCourse(newCourseDto: NewCourseDto): Promise<Course> {
     
-    let newCourse:Course = new Course();
+    const newCourse:Course = new Course();
     newCourse.name = newCourseDto.name;
     newCourse.category = await this.categories.findOneBy({id : newCourseDto.categoryId})
     newCourse.description = newCourseDto.description;
     newCourse.level = newCourseDto.level;
     newCourse.weeks = newCourseDto.weeks;
     newCourse.minutes = 0;
-
+    newCourse.videos = [];
+    
     return this.courses.save(newCourse);
   }
 
@@ -51,16 +54,12 @@ export class CourseService {
     if (video === null) {
       return null;
     }
-    if (video.course !== undefined) {
+    if (video.id_curso !== undefined) {
       return null;
-    }
-    
-    if (course.videos === undefined) {
-      course.videos = [];
     }
 
     course.videos.push(video);
-    course.minutes += video.time;
+    course.minutes += video.tiempo;
 
     return this.courses.save(course);
   }
@@ -90,7 +89,7 @@ export class CourseService {
   }
 
   async findByCategory(categoryId: string): Promise<Course[]> {
-    let categoryToFind: Category = await this.categories.findOneBy({id: categoryId});
+    const categoryToFind: CategoryP = await this.categories.findOneBy({id: categoryId});
 
     if (categoryToFind) {
      return this.courses.findBy({category: categoryToFind});
@@ -106,7 +105,7 @@ export class CourseService {
   }
 
   async deleteByCategory(categoryId: string): Promise<void> {
-    let category: Category = await this.categories.findOneBy({id: categoryId});
+    const category: CategoryP = await this.categories.findOneBy({id: categoryId});
     
     if (category) {
       this.courses.delete({category: category});
