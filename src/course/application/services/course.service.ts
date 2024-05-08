@@ -9,17 +9,18 @@ import { AddVideoDto } from '../dto/addVideo.Dto';
 import { SetImageDto } from '../dto/setImage.Dto';
 import { CategoryP } from 'src/course/domain/categoryPlaceholder.entity';
 import { Video } from 'src/video/entities/video.entity';
+import { Category } from 'src/category/category.entity';
 
 @Injectable()
 export class CourseService {
   private readonly courses: Repository<Course>;
-  private readonly categories: Repository<CategoryP>;
+  private readonly categories: Repository<Category>;
   private readonly videos: Repository<Video>;
   private readonly images: Repository<Image>;
   //TODO: Arreglar las entidades necesarias para el curso y conectar
 
   constructor(@InjectRepository(Course) courses: Repository<Course>, 
-              @InjectRepository(CategoryP) categories: Repository<CategoryP>,
+              @InjectRepository(Category) categories: Repository<Category>,
               @InjectRepository(Video) videos: Repository<Video>,
               @InjectRepository(Image) images: Repository<Image>) {
     this.courses = courses;
@@ -89,7 +90,7 @@ export class CourseService {
   }
 
   async findByCategory(categoryId: string): Promise<Course[]> {
-    const categoryToFind: CategoryP = await this.categories.findOneBy({id: categoryId});
+    const categoryToFind: Category = await this.categories.findOneBy({id: categoryId});
 
     if (categoryToFind) {
      return this.courses.findBy({category: categoryToFind});
@@ -105,7 +106,7 @@ export class CourseService {
   }
 
   async deleteByCategory(categoryId: string): Promise<void> {
-    const category: CategoryP = await this.categories.findOneBy({id: categoryId});
+    const category: Category = await this.categories.findOneBy({id: categoryId});
     
     if (category) {
       this.courses.delete({category: category});
