@@ -2,8 +2,8 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Followers } from "./followers.entity";
 
 
-@Entity('userFF')
-export class UserFF {
+@Entity('user')
+export class User {
 
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -30,13 +30,13 @@ export class UserFF {
         ( follower ) => follower.userByIdUser,
         { cascade: true, eager: true}
     )
-    IdUser?: Followers[];
+    IdUser: Followers[];
 
     @OneToMany( // Este es el IdFollower
         () => Followers,
         ( follower ) => follower.userByIdFollower,
         { cascade: true, eager: true}
     )
-    IdFollower?: Followers[];
+    IdFollower: Followers[];
     //!
 }

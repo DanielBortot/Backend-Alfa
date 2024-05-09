@@ -1,23 +1,32 @@
-import { Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
-import { UserFF } from "./userFF.entity";
+import { Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./user.entity";
+
 
 
 @Entity('followers')
 export class Followers {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
+
+    @PrimaryColumn()
+    user_id: string;
+
+    @PrimaryColumn()
+    follower_id: string;
 
     @ManyToOne( // Este es el IdUser
-        () => UserFF,
+        () => User,
         ( user ) => user.IdUser,      
     )
-    userByIdUser: string; //userByidUserID
+    @JoinColumn({name: 'user_id'})
+    userByIdUser: User; //userByidUserID
 
     @ManyToOne( // Este es el IdFollower
-        () => UserFF,
+        () => User,
         ( user ) => user.IdFollower,      
     )
-    userByIdFollower: string;
+    @JoinColumn({name: 'follower_id'})
+    userByIdFollower: User;
 
 }

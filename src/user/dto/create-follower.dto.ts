@@ -1,16 +1,14 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsString } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger"
 
 export class CreateFollowerDto {
 
     @ApiProperty()
     @IsString()
-    @IsOptional()
-    idUser?: string;
+    idUser: string;
 
     @ApiProperty()
     @IsString()
-    @IsOptional()
-    idFollower?: string;
+    idFollower: string;
 
 }

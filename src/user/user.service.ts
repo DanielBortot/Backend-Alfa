@@ -5,21 +5,20 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 
-import { UserFF } from './entities/userFF.entity';
+
 import { Followers } from './entities/followers.entity';
 import { CreateFollowerDto } from './dto/create-follower.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
 
   constructor(
-    @InjectRepository( UserFF )
-    private readonly userRepository: Repository<UserFF>,
+    @InjectRepository( User )
+    private readonly userRepository: Repository<User>,
 
     @InjectRepository( Followers )
     private readonly followersRepository: Repository<Followers>,
-
-    private readonly dataSource: DataSource
   ){}
 
 
@@ -33,20 +32,20 @@ export class UserService {
   }
 
   async followUser(id: string, createFollowerDto: CreateFollowerDto){
-    const follower = this.followersRepository.create( );
-
-    follower.userByIdFollower = createFollowerDto.idFollower;
-    follower.userByIdUser = id;
+    const user1 = await this.userRepository.findOneBy({id: createFollowerDto.idUser});
+    const user2 = await this.userRepository.findOneBy({id: createFollowerDto.idFollower});
+    const follower = this.followersRepository.create({userByIdUser: user1, userByIdFollower: user2});
 
     await this.followersRepository.save(follower);
   }
 
-  async unfollowUser(idUser: string, idFollower){
-
+  async unfollowUser(idUser: string, idFollower: string){
+    const user1 = await this.userRepository.findOneBy({id: idUser});
+    const user2 = await this.userRepository.findOneBy({id: idFollower});
     const follower = await this.followersRepository.findOne({ 
       where: { 
-          userByIdUser: idUser,
-          userByIdFollower: idFollower
+          userByIdUser: user1,
+          userByIdFollower: user2
       } 
   });
 
@@ -56,7 +55,7 @@ export class UserService {
 
 
   async findOne(id: string) {
-    let user: UserFF
+    let user: User
 
 
     const queryBuilder = this.userRepository.createQueryBuilder('user');

@@ -4,9 +4,9 @@ import { IDatabaseConnection } from './interfaces/auth.IUserRegister';
 import { PgUserHandler } from './implementations/auth.pgUserRegister';
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { User } from './entities/user.entity';
 import { loggedUser } from './types/loggedUser.type';
 import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/user/entities/user.entity';
 @Injectable()
 export class AuthService {
   private readonly users: Repository<User>;
