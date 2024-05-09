@@ -1,6 +1,6 @@
-import { User } from "src/auth/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { PostsEntity } from './posts.entity';
+import { User } from "src/user/entities/user.entity";
 
 
 @Entity('comentary')

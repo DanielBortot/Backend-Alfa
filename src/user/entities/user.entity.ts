@@ -1,5 +1,6 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Followers } from "./followers.entity";
+import { Image } from "src/image/domain/image.entity";
 
 
 @Entity('user')
@@ -20,9 +21,12 @@ export class User {
     @Column('varchar',{length: 11})
     phone: string;
 
-    @Column('varchar')
-    images: string;
-
+    @ManyToOne(
+        () => Image,
+        image => image.id
+    )
+    @JoinColumn({name: 'image_id'})
+    image: Image;
 
     //! Este es followers
     @OneToMany( // Este es el IdUser
