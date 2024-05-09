@@ -1,5 +1,7 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable prefer-const */
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto, LoginUserDto, UpdateAuthDto } from './dto';
+import { CreateUserDto, LoginUserDto} from './dto';
 import { IDatabaseConnection } from './interfaces/auth.IUserRegister';
 import { PgUserHandler } from './implementations/auth.pgUserRegister';
 import { Repository } from "typeorm";
