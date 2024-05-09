@@ -1,8 +1,12 @@
+import { Category } from 'src/category/category.entity';
+import { Image } from 'src/image/domain/image.entity';
 import {
   BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -25,9 +29,11 @@ export class Blog {
   @Column('varchar')
   descripcion: string;
 
-  @Column('varchar')
-  id_imagen: string;
+  @ManyToOne(() => Image, image => image.id)
+  @JoinColumn({name: 'id_imagen'})
+  id_imagen: Image;
 
-  @Column('varchar')
-  id_category: string;
+  @ManyToOne(() => Category, category => category.id)
+  @JoinColumn({name: 'id_category'})
+  id_category: Category;
 }

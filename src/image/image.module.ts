@@ -9,6 +9,7 @@ import { Image } from './domain/image.entity';
     TypeOrmModule.forFeature([Image])
   ],
   controllers: [ImageController],
-  providers: [ImageService]
+  providers: [ImageService],
+  exports: [ImageService]
 })
 export class ImageModule {}

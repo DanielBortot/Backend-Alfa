@@ -12,12 +12,12 @@ export class Category{
     name:string;
 
     @Column()
-    description:string;
+    description:string; 
 
-    @OneToOne(type => Image)
-    @JoinColumn()
+    @OneToOne(() => Image, image => image.id)
+    @JoinColumn({name: 'icon_id'})
     icon: Image;
 
-    @OneToMany(type => Course, course => course.category)
+    @OneToMany(() => Course, course => course.category)
     courses: Course[];
 }
