@@ -1,12 +1,12 @@
 import { Repository } from "typeorm";
 import { CreateUserDto, LoginUserDto } from "../dto";
 import { IDatabaseConnection as IUserHandler } from "../interfaces/auth.IUserRegister";
-import { User } from "../entities/user.entity";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { loggedUser } from "../types/loggedUser.type";
 import { JwtService } from "@nestjs/jwt";
 import { IEncrypted } from "../interfaces/auth.IEncrypted";
 import { BcryptEncrypted } from "./auth.bcryptEncrypted";
+import { User } from "src/user/entities/user.entity";
 
 //! Se necesita hacer revision para dividir responsabilidades
 export class PgUserHandler implements IUserHandler {
