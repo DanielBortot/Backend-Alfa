@@ -1,25 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { NewCourseDto } from '../dto/newCourse.Dto';
 import { Repository } from 'typeorm';
-import { Course } from '../../domain/course.entity';
+import { CourseEntity } from '../../infrastructure/entities/course.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { VideoP } from '../../domain/videoPlaceholder.entity';
 import { Image } from 'src/image/domain/image.entity';
 import { AddVideoDto } from '../dto/addVideo.Dto';
 import { SetImageDto } from '../dto/setImage.Dto';
-import { CategoryP } from 'src/course/domain/categoryPlaceholder.entity';
 import { Video } from 'src/video/entities/video.entity';
 import { Category } from 'src/category/category.entity';
 
 @Injectable()
 export class CourseService {
-  private readonly courses: Repository<Course>;
+  private readonly courses: Repository<CourseEntity>;
   private readonly categories: Repository<Category>;
   private readonly videos: Repository<Video>;
   private readonly images: Repository<Image>;
-  //TODO: Arreglar las entidades necesarias para el curso y conectar
 
-  constructor(@InjectRepository(Course) courses: Repository<Course>, 
+  constructor(@InjectRepository(CourseEntity) courses: Repository<CourseEntity>, 
               @InjectRepository(Category) categories: Repository<Category>,
               @InjectRepository(Video) videos: Repository<Video>,
               @InjectRepository(Image) images: Repository<Image>) {
@@ -31,9 +28,9 @@ export class CourseService {
 
   //TODO: El tema de tener todos los servicios en un solo lado va en contra de hexagonal
 
-  async createNewCourse(newCourseDto: NewCourseDto): Promise<Course> {
+  async createNewCourse(newCourseDto: NewCourseDto): Promise<CourseEntity> {
     
-    const newCourse:Course = new Course();
+    const newCourse:CourseEntity = new CourseEntity();
     newCourse.name = newCourseDto.name;
     newCourse.category = await this.categories.findOneBy({id : newCourseDto.categoryId})
     newCourse.description = newCourseDto.description;
@@ -45,8 +42,8 @@ export class CourseService {
     return this.courses.save(newCourse);
   }
 
-  async addVideo(addVideoDto: AddVideoDto): Promise<Course> {
-    let course:Course = await this.courses.findOneBy({id : addVideoDto.courseId});
+  async addVideo(addVideoDto: AddVideoDto): Promise<CourseEntity> {
+    let course:CourseEntity = await this.courses.findOneBy({id : addVideoDto.courseId});
     let video:Video = await this.videos.findOneBy({id: addVideoDto.videoId})
 
     if (course === null) {
@@ -66,7 +63,7 @@ export class CourseService {
   }
 
   async setImage(setImageDto: SetImageDto) {
-    let course: Course = await this.courses.findOneBy({ id : setImageDto.courseId});
+    let course: CourseEntity = await this.courses.findOneBy({ id : setImageDto.courseId});
     let image: Image = await this.images.findOneBy({ id : setImageDto.imageId});
 
     if (course === null) {
@@ -81,15 +78,15 @@ export class CourseService {
     return this.courses.save(course);
   }
 
-  findAll(): Promise<Course[]> {
+  findAll(): Promise<CourseEntity[]> {
     return this.courses.find()
   }
 
-  findById(idToFind: string): Promise<Course> {
+  findById(idToFind: string): Promise<CourseEntity> {
     return this.courses.findOneBy({id: idToFind});
   }
 
-  async findByCategory(categoryId: string): Promise<Course[]> {
+  async findByCategory(categoryId: string): Promise<CourseEntity[]> {
     const categoryToFind: Category = await this.categories.findOneBy({id: categoryId});
 
     if (categoryToFind) {
@@ -97,7 +94,7 @@ export class CourseService {
     }
   }
 
-  findByLevel(level: string): Promise<Course[]> {
+  findByLevel(level: string): Promise<CourseEntity[]> {
     return this.courses.findBy({level: level});
   }
 

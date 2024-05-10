@@ -1,13 +1,11 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { VideoP } from "./videoPlaceholder.entity";
 import { Image } from "src/image/domain/image.entity";
-import { CategoryP } from "./categoryPlaceholder.entity";
 import { Video } from "src/video/entities/video.entity";
 import { Category } from "src/category/category.entity";
 
 
 @Entity('course')
-export class Course {
+export class CourseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 import { ApiTags } from '@nestjs/swagger';
 import { NewCourseDto as NewCourseDto } from '../../application/dto/newCourse.Dto';
 import { CourseService } from '../../application/services/course.service';
-import { Course } from '../../domain/course.entity';
+import { CourseEntity } from '../entities/course.entity';
 import { AddVideoDto} from 'src/course/application/dto/addVideo.Dto';
 import { SetImageDto} from 'src/course/application/dto/setImage.Dto';
 
@@ -14,37 +14,37 @@ export class CourseController {
   constructor(private readonly courseService:CourseService){}
 
   @Post("")
-  createNewCourse(@Body() newCourseDto: NewCourseDto): Promise<Course> {
+  createNewCourse(@Body() newCourseDto: NewCourseDto): Promise<CourseEntity> {
     return this.courseService.createNewCourse(newCourseDto);
   }
 
   @Patch("/video")
-  addVideoToCourse(@Body() addVideoDto: AddVideoDto): Promise<Course> {
+  addVideoToCourse(@Body() addVideoDto: AddVideoDto): Promise<CourseEntity> {
     return this.courseService.addVideo(addVideoDto);
   }
 
   @Patch("/image")
-  setCourseImage(@Body() setImageDto: SetImageDto): Promise<Course> {
+  setCourseImage(@Body() setImageDto: SetImageDto): Promise<CourseEntity> {
     return this.courseService.setImage(setImageDto);
   }
 
   @Get("all")
-  getAllCourses():Promise<Course[]> {
+  getAllCourses():Promise<CourseEntity[]> {
     return this.courseService.findAll();
   }
   
   @Get(":id")
-  getCourseById(@Param('id') id: string):Promise<Course> {
+  getCourseById(@Param('id') id: string):Promise<CourseEntity> {
     return this.courseService.findById(id);
   }
 
   @Get("category/:id")
-  getCoursesByCategory(@Param("id") categoryId:string): Promise<Course[]> {
+  getCoursesByCategory(@Param("id") categoryId:string): Promise<CourseEntity[]> {
     return this.courseService.findByCategory(categoryId);
   }
 
   @Get("level/:level")
-  getCoursesByLevel(@Param("level") level: string):Promise<Course[]> {
+  getCoursesByLevel(@Param("level") level: string):Promise<CourseEntity[]> {
     return this.courseService.findByLevel(level);
   }
 
