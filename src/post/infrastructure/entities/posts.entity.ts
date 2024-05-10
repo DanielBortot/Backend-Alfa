@@ -1,8 +1,9 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ComentaryEntity } from './comentary.entity';
 import { PostTagEntity } from "./post_tag.entity";
+import { Image } from "src/image/domain/image.entity";
 
-@Entity('posts')
+@Entity('post')
 export class PostsEntity{
 
     @PrimaryGeneratedColumn('uuid')
@@ -13,9 +14,6 @@ export class PostsEntity{
 
     @Column({type: 'text'})
     description: string;
-    
-    @Column({type: 'text'})
-    imageURL: string; 
 
     @Column({type: 'date'})
     publication_date: Date;
@@ -29,4 +27,10 @@ export class PostsEntity{
         () => ComentaryEntity,  comentary => comentary.post
     )
     comentaries: ComentaryEntity[]
+
+    @OneToOne(
+        () => Image, image => image.id
+    )
+    @JoinColumn({name: 'id_imagen'})
+    imageURL: Image; 
 }

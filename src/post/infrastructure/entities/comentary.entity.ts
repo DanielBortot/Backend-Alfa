@@ -1,6 +1,6 @@
-import { User } from "src/auth/entities/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { PostsEntity } from './posts.entity';
+import { User } from "src/user/entities/user.entity";
 
 
 @Entity('comentary')
@@ -15,14 +15,22 @@ export class ComentaryEntity {
     @Column({type: 'date', default: () => 'CURRENT_TIMESTAMP'})
     publication_date: Date;
 
+    @PrimaryColumn()
+    user_id: string;
+
+    @PrimaryColumn()
+    post_id: string;
+
     @ManyToOne(
         () => User,  user => user.id
     )
-    user: string;
+    @JoinColumn({name: 'user_id'})
+    user: User;
 
     @ManyToOne(
         () => PostsEntity, post => post.id
     )
-    post: string; 
+    @JoinColumn({name: 'post_id'})
+    post: PostsEntity; 
 
-}
+} 

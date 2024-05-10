@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -29,19 +30,19 @@ export class BlogController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     const oneBlog = this.blogService.findOne(id);
     return oneBlog;
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() payload: UpdateBlogDto) {
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() payload: UpdateBlogDto) {
     const updated = this.blogService.update(id, payload);
     return updated;
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id', ParseUUIDPipe) id: string) {
     const deleted = this.blogService.remove(id);
     return deleted;
   }

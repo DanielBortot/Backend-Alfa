@@ -1,12 +1,14 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable prefer-const */
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto, LoginUserDto, UpdateAuthDto } from './dto';
+import { CreateUserDto, LoginUserDto} from './dto';
 import { IDatabaseConnection } from './interfaces/auth.IUserRegister';
 import { PgUserHandler } from './implementations/auth.pgUserRegister';
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { User } from './entities/user.entity';
 import { loggedUser } from './types/loggedUser.type';
 import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/user/entities/user.entity';
 @Injectable()
 export class AuthService {
   private readonly users: Repository<User>;

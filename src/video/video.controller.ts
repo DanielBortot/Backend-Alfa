@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, ParseUUIDPipe } from '@nestjs/common';
 import { VideoService } from './video.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { GetVideosDto } from './dto/get-videos.dto';
@@ -44,7 +44,7 @@ export class VideoController {
   }
 
   @Delete('delVideo/:id')
-  deleteVideo(@Param('id') id: string) {
+  deleteVideo(@Param('id', ParseUUIDPipe) id: string) {
     return this.videoService.deleteVideo(id)
   }
 }

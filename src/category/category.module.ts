@@ -10,6 +10,7 @@ import { Image } from 'src/image/domain/image.entity';
 @Module({
     imports:[TypeOrmModule.forFeature([Category, Image])],
     controllers:[CategoryController],
-    providers:[CategoryService]
+    providers:[CategoryService],
+    exports: [CategoryService]
 })
 export class CategoryModule {}

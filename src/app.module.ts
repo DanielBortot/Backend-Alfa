@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { VideoModule } from './video/video.module';
 import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 import { PostModule } from './post/infrastructure/post.module';
 import { CourseModule } from './course/infrastructure/course.module';
 import { NotifyModule } from './notify/notify.module';
@@ -15,6 +16,7 @@ import { ImageModule } from './image/image.module';
     ConfigModule.forRoot(),
     DatabaseModule,
     AuthModule,
+    UserModule,
     PostModule,
     CourseModule,
     CategoryModule,

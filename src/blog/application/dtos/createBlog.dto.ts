@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBlogDto {
@@ -13,12 +13,12 @@ export class CreateBlogDto {
   descripcion: string;
 
   @ApiProperty()
-  @IsString()
   @IsNotEmpty()
+  @IsUUID()
   id_imagen: string;
 
   @ApiProperty()
-  @IsString()
   @IsNotEmpty()
+  @IsUUID()
   id_category: string;
 }

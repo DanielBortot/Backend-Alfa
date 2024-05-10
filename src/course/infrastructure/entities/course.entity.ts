@@ -24,11 +24,12 @@ export class CourseEntity {
   @Column()
   minutes:number;
 
-  @OneToOne(type => Image)
-  @JoinColumn()
+  @OneToOne(() => Image, image => image.id)
+  @JoinColumn({name: 'id_imagen'})
   image:Image;
 
-  @ManyToOne(type => Category, category => category.courses)
+  @ManyToOne(() => Category, category => category.courses)
+  @JoinColumn({name: 'id_category'})
   category: Category;
 
   @OneToMany(type => Video, video => video.id_curso)
