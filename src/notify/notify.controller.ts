@@ -22,12 +22,12 @@ export class NotifyController {
     }
 
     @Get(':id')
-    getNotificacion(@Param('id', ParseUUIDPipe)id: string): Promise<notificacion>{
+    getNotificacion(@Param('id', ParseUUIDPipe) id: string): Promise<notificacion>{
         return this.notificacionservice.getNotificacion(id);
     }
 
     @Delete(':id')
-        deleteNotificacion(@Param('id', ParseUUIDPipe)id: string){
+        deleteNotificacion(@Param('id', ParseUUIDPipe) id: string){
             return this.notificacionservice.deleteNotificacion(id);
         }
         

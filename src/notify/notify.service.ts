@@ -31,7 +31,7 @@ export class NotifyService {
     });
          
     if(!notifyfound){
-        return new HttpException('notificacion no encontrada', HttpStatus.NOT_FOUND);
+        throw new HttpException('notificacion no encontrada', HttpStatus.NOT_FOUND);
     }
     return notifyfound;
     }
@@ -39,7 +39,7 @@ export class NotifyService {
     async deleteNotificacion(id: string){
         const result = await this.notificacionRepository.delete(id);
         if(result.affected === 0){
-            return new HttpException('notificacion no encontrada', HttpStatus.NOT_FOUND);
+            throw new HttpException('notificacion no encontrada', HttpStatus.NOT_FOUND);
         }
         return result;
     }
