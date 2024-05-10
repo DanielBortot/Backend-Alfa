@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Course } from "src/course/domain/course.entity";
+import { CourseEntity } from "src/course/infrastructure/entities/course.entity";
 import { Image } from "src/image/domain/image.entity";
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
@@ -18,6 +18,6 @@ export class Category{
     @JoinColumn({name: 'icon_id'})
     icon: Image;
 
-    @OneToMany(() => Course, course => course.category)
-    courses: Course[];
+    @OneToMany(type => CourseEntity, course => course.category)
+    courses: CourseEntity[];
 }
