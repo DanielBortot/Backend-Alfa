@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { Category } from './category.entity';
@@ -23,12 +23,12 @@ export class CategoryController {
   }
 
   @Get('/:id')
-  getCategoryById(@Param('id') id: string): Promise<Category> {
+  getCategoryById(@Param('id', ParseUUIDPipe) id: string): Promise<Category> {
     return this.categoryService.getCategoryById(id);
   }
 
   @Delete('/:id')
-  deleteCategoryById(@Param('id') id: string): Promise<void> {
+  deleteCategoryById(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     return this.categoryService.deleteCategory(id);
   }
 }

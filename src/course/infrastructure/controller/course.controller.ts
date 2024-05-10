@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { NewCourseDto as NewCourseDto } from '../../application/dto/newCourse.Dto';
 import { CourseService } from '../../application/services/course.service';
@@ -34,12 +34,12 @@ export class CourseController {
   }
   
   @Get(":id")
-  getCourseById(@Param('id') id: string):Promise<Course> {
+  getCourseById(@Param('id', ParseUUIDPipe) id: string):Promise<Course> {
     return this.courseService.findById(id);
   }
 
   @Get("category/:id")
-  getCoursesByCategory(@Param("id") categoryId:string): Promise<Course[]> {
+  getCoursesByCategory(@Param("id", ParseUUIDPipe) categoryId:string): Promise<Course[]> {
     return this.courseService.findByCategory(categoryId);
   }
 
@@ -49,12 +49,12 @@ export class CourseController {
   }
 
   @Delete(":id")
-  deleteCourseById(@Param("id") id:string):void {
+  deleteCourseById(@Param("id", ParseUUIDPipe) id:string):void {
     this.courseService.deleteById(id);
   }
 
   @Delete("category/:id")
-  deleteCoursesByCategory(@Param("id") categoryId: string): void {
+  deleteCoursesByCategory(@Param("id", ParseUUIDPipe) categoryId: string): void {
     this.courseService.deleteByCategory(categoryId);
   }
 } 
