@@ -37,13 +37,13 @@ export class BlogService {
   }
 
   async findOne(id: string) {
-    try {
-      const oneBlog = await this.blogDB.findOneBy({ id });
-      return oneBlog;
-    } catch (e) {
+    const oneBlog = await this.blogDB.findOneBy({ id });
+    if (!oneBlog) {
       throw new HttpException('Blog not found', HttpStatus.NOT_FOUND);
     }
+    return oneBlog;
   }
+
   async findAll() {
     const allBlogs = await this.blogDB.find();
     return allBlogs;
@@ -61,21 +61,22 @@ export class BlogService {
       id_imagen: image,
       id_category: category,
     };
-    try {
-      await this.blogDB.update(id, newBlog);
-      return this.findOne(id);
-    } catch (e) {
+
+    const updatedBlog = await this.blogDB.update(id, newBlog);
+    if (!updatedBlog.affected) {
       throw new HttpException('Blog not found', HttpStatus.NOT_FOUND);
     }
+
+    return this.findOne(id);
   }
 
   async remove(id: string) {
     //Probable uso de softdelete
-    try {
-      await this.blogDB.delete(id);
-      return 'Blog has been removed';
-    } catch (e) {
+    const blog = await this.blogDB.delete(id);
+
+    if (blog.affected === 0) {
       throw new HttpException('Blog not found', HttpStatus.NOT_FOUND);
     }
+    return 'Blog has been removed';
   }
 }
