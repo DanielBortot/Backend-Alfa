@@ -3,6 +3,7 @@ import { GetVideosDto } from "../dto/get-videos.dto";
 import { Video } from "../entities/video.entity";
 import { IDatabaseConnection } from "../interfaces/video.IDataBaseConnection";
 import { UploadVideoDto } from "../dto/upload-video.dto";
+import { HttpException, HttpStatus } from "@nestjs/common";
 
 export class PgVideo implements IDatabaseConnection {
 
@@ -17,8 +18,10 @@ export class PgVideo implements IDatabaseConnection {
         return this.videos.save(newVideo);
     }
 
-    getVideos(curso: GetVideosDto): Promise<Video[]> {
-        return this.videos.findBy({id_curso: curso.id_curso});
+    async getVideos(curso: GetVideosDto): Promise<Video[]> {
+        let videos = await this.videos.findBy({id_curso: curso.id_curso});
+        if (videos.length == 0) throw new HttpException('No existen videos en este curso', HttpStatus.BAD_REQUEST);
+        return videos;
     }
 
     async deleteVideo(id: string): Promise<Video> {
