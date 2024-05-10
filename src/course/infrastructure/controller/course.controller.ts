@@ -7,7 +7,7 @@ import { AddVideoDto} from 'src/course/application/dto/addVideo.Dto';
 import { SetImageDto} from 'src/course/application/dto/setImage.Dto';
 
 
-ApiTags("Course")
+@ApiTags("Course")
 @Controller('course')
 export class CourseController {
 
