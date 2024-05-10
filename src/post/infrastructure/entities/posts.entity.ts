@@ -18,6 +18,9 @@ export class PostsEntity{
     @Column({type: 'date'})
     publication_date: Date;
 
+    @Column({type: 'text'})
+    imageURL: string;
+
     @OneToMany(
         () => PostTagEntity, post_tag => post_tag.post
     )
@@ -28,9 +31,9 @@ export class PostsEntity{
     )
     comentaries: ComentaryEntity[]
 
-    @OneToOne(
-        () => Image, image => image.id
-    )
-    @JoinColumn({name: 'id_imagen'})
-    imageURL: Image; 
+    // @OneToOne(
+    //     () => Image, image => image.id
+    // )
+    // @JoinColumn({name: 'id_imagen'})
+    // imageURL: Image; 
 }
