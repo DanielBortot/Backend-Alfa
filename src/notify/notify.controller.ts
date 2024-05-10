@@ -3,8 +3,9 @@ import { createNotificaciondto } from './dto/create-notificacion.dto';
 import { NotifyService } from './notify.service';
 import { notificacion } from './notify.entity';
 import { updateNotificaciondto } from './dto/update-notificacion';
+import { ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('Notify')
 @Controller('notify')
 export class NotifyController {
 
