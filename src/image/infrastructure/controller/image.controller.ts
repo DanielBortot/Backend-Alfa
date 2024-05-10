@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, FileTypeValidator, Get, Param, ParseFilePipe, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, FileTypeValidator, Get, Param, ParseFilePipe, ParseUUIDPipe, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { ImageService } from 'src/image/application/services/image.service';
@@ -27,12 +27,12 @@ export class ImageController {
   }
 
   @Get(':id')
-  getImageById(@Param('id') id: string): Promise<Image> {
+  getImageById(@Param('id', ParseUUIDPipe) id: string): Promise<Image> {
     return this.imageService.getImageById(id);
   }
 
   @Delete(':id')
-  deleteImageById(@Param('id') id: string): Promise<void> {
+  deleteImageById(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     return this.imageService.deleteById(id);
   }
 

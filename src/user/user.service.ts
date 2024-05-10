@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -31,9 +31,12 @@ export class UserService {
     return user;
   }
 
-  async followUser(id: string, createFollowerDto: CreateFollowerDto){
+  async followUser(createFollowerDto: CreateFollowerDto){
     const user1 = await this.userRepository.findOneBy({id: createFollowerDto.idUser});
     const user2 = await this.userRepository.findOneBy({id: createFollowerDto.idFollower});
+
+    if (!user1 || !user2) throw new HttpException('No existe el usuario', HttpStatus.BAD_REQUEST);
+
     const follower = this.followersRepository.create({userByIdUser: user1, userByIdFollower: user2});
 
     await this.followersRepository.save(follower);
@@ -42,6 +45,9 @@ export class UserService {
   async unfollowUser(idUser: string, idFollower: string){
     const user1 = await this.userRepository.findOneBy({id: idUser});
     const user2 = await this.userRepository.findOneBy({id: idFollower});
+
+    if (!user1 || !user2) throw new HttpException('No existe el usuario', HttpStatus.BAD_REQUEST);
+
     const follower = await this.followersRepository.findOne({ 
       where: { 
           userByIdUser: user1,
@@ -55,32 +61,10 @@ export class UserService {
 
 
   async findOne(id: string) {
-    let user: User
-
-
-    const queryBuilder = this.userRepository.createQueryBuilder('user');
-
+    let user = await this.userRepository.findOneBy({ id: id });
+    if (!user) throw new HttpException('No existe el usuario', HttpStatus.BAD_REQUEST);
     
-
-    queryBuilder.leftJoinAndSelect('user.IdUser', 'followers');
-    queryBuilder.leftJoinAndSelect('user.IdFollower', 'followings');
-
-
-    queryBuilder.where('user.id = :id', { id: id });
-
-    user = await queryBuilder.getOne()
-
-  
-    user = await this.userRepository.findOneBy({ id: id });
-    
-
-    let followersCount = user.IdUser.length;
-    let followingsCount = user.IdFollower.length;
-    
-    return [user, followersCount, followingsCount];
-
-    
-
+    return user;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
