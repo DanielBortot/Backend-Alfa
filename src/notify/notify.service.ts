@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { notificacion } from './notify.entity';
 import { Repository } from 'typeorm';
@@ -25,22 +25,36 @@ export class NotifyService {
         return this.notificacionRepository.find();
     }
 
-    getNotificacion(id: string){
-        return this.notificacionRepository.findOne({
-            where: {id}
-        });
+   async getNotificacion(id: string){
+    const notifyfound = await this.notificacionRepository.findOne({
+        where: {id}
+    });
+         
+    if(!notifyfound){
+        return new HttpException('notificacion no encontrada', HttpStatus.NOT_FOUND);
+    }
+    return notifyfound;
     }
 
-    deleteNotificacion(id: string){
-        return this.notificacionRepository.delete({id});
+    async deleteNotificacion(id: string){
+        const result = await this.notificacionRepository.delete(id);
+        if(result.affected === 0){
+            return new HttpException('notificacion no encontrada', HttpStatus.NOT_FOUND);
+        }
+        return result;
     }
 
-    updateNotificacion(id: string, notificacion: updateNotificaciondto){
+    async updateNotificacion(id: string, notificacion: updateNotificaciondto){
         const notificacionUpdate = {
             leida: true,
             ...notificacion,
         }
-        return this.notificacionRepository.update({id}, notificacionUpdate);
+        const result = await this.notificacionRepository.update(id, notificacionUpdate);
+
+        if(!result.affected){
+            throw new HttpException('notificacion no encontrada', HttpStatus.NOT_FOUND);
+        }
+        return result;
     } 
     
     deleteAllNotificaciones() {

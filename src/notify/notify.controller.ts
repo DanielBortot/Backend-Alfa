@@ -21,7 +21,7 @@ export class NotifyController {
     }
 
     @Get(':id')
-    getNotificacion(@Param('id')id: string): Promise<notificacion>{
+    getNotificacion(@Param('id')id: string){
         return this.notificacionservice.getNotificacion(id);
     }
 
