@@ -3,7 +3,6 @@ import { Image } from 'src/image/domain/image.entity';
 import {
   BeforeInsert,
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -29,11 +28,11 @@ export class Blog {
   @Column('varchar')
   descripcion: string;
 
-  @ManyToOne(() => Image, image => image.id)
-  @JoinColumn({name: 'id_imagen'})
+  @ManyToOne(() => Image, (image) => image.id)
+  @JoinColumn({ name: 'id_imagen' })
   id_imagen: Image;
 
-  @ManyToOne(() => Category, category => category.id)
-  @JoinColumn({name: 'id_category'})
+  @ManyToOne(() => Category, (category) => category.id)
+  @JoinColumn({ name: 'id_category' })
   id_category: Category;
 }
