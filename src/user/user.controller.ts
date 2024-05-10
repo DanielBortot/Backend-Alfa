@@ -13,14 +13,12 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Post(':id')
+  @Post('follow')
   createFollower(
-    @Param('id') id: string,
     @Body() createFollowerDto: CreateFollowerDto,
   ) {
-    return this.userService.followUser(id, createFollowerDto);
+    return this.userService.followUser(createFollowerDto);
   }
-
 
   @Get(':id')
   findOne(@Param('id') id: string) {
