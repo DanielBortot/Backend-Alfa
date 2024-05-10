@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateBlogDto } from '../dtos/createBlog.dto';
 import { Blog } from 'src/blog/domain/blog';
 import { Repository } from 'typeorm';
@@ -41,7 +41,7 @@ export class BlogService {
       const oneBlog = await this.blogDB.findOneBy({ id });
       return oneBlog;
     } catch (e) {
-      return 'Blog not found, try again!';
+      throw new HttpException('Blog not found', HttpStatus.NOT_FOUND);
     }
   }
   async findAll() {
@@ -65,7 +65,7 @@ export class BlogService {
       await this.blogDB.update(id, newBlog);
       return this.findOne(id);
     } catch (e) {
-      return 'Blog not found, try again!';
+      throw new HttpException('Blog not found', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -75,7 +75,7 @@ export class BlogService {
       await this.blogDB.delete(id);
       return 'Blog has been removed';
     } catch (e) {
-      return 'Blog not found!!';
+      throw new HttpException('Blog not found', HttpStatus.NOT_FOUND);
     }
   }
 }
