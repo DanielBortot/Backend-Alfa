@@ -1,5 +1,5 @@
+import { User } from "src/user/entities/user.entity";
 import { CreateUserDto, LoginUserDto } from "../dto";
-import { User } from "../entities/user.entity";
 import { loggedUser } from "../types/loggedUser.type";
 
 export interface IDatabaseConnection {

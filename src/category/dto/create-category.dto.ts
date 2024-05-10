@@ -12,9 +12,4 @@ export class CreateCategoryDto {
   @IsString()
   @IsNotEmpty()
   description: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  iconUrl: string;
 }
