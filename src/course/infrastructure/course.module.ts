@@ -12,6 +12,6 @@ import { Category } from 'src/category/category.entity';
     TypeOrmModule.forFeature([CourseEntity, Category, Video, Image])
   ],
   controllers: [CourseController],
-  providers: [CourseService]
+  providers: []
 })
 export class CourseModule {}

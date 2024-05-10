@@ -6,35 +6,76 @@ import { Category } from "src/category/category.entity";
 import { CourseMapper } from "../mappers/course.mapper";
 import { HttpException, HttpStatus } from "@nestjs/common";
 
-export class OrmCourseRepository extends Repository<CourseEntity> implements ICourseRepository {
+export class OrmCourseRepository extends Repository<CourseEntity> /*implements ICourseRepository*/ {
   constructor(database: DataSource) {
     super(CourseEntity, database.manager);
   }
 
-  async getById(courseId: string): Promise<Course> {
+  async getById(courseId: string): Promise<CourseEntity> {
     try {
-      const result = this.findOneBy({id: courseId});
-      return CourseMapper.toDomain(result);
+      const result = await this.findOne({
+        relations:{
+          image: true,
+          category: true
+          // videos: true
+        }, where: {
+          id: courseId
+        }});
+      // return CourseMapper.toDomain(result);
+      return result;
     } catch (error) {
       throw new HttpException("No se encontró el curso" ,HttpStatus.BAD_REQUEST);
     }
   }
 
-  async getAllByCategory(category: Category): Promise<Course[]> {
+  async getAllByCategory(categoryId: string): Promise<CourseEntity[]> {
     try {
-      const result = await this.findBy({category: category});
-      return result.map( course => CourseMapper.toDomain(course));
+      const result = await this.find({relations: {
+        image: true,
+        category: true
+        // videos: true
+      }, where:{
+        category: {
+          id: categoryId
+        }
+      }});
+      // return result.map( course => CourseMapper.toDomain(course));
+      return result;
     } catch (error) {
-      
+      throw new HttpException("No se encontraron cursos de la categoría", HttpStatus.BAD_REQUEST);
     }
   }
   
-  getAllByLevel(level: string): Promise<Course[]> {
-		return this.findBy({level: level});
+  async getAllByLevel(level: string): Promise<CourseEntity[]> {
+		try {
+      const result = await this.find({relations: {
+        image: true,
+        category: true
+        // videos: true
+      }, where:{
+        level: level
+      }});
+      // return result.map(course => CourseMapper.toDomain(course))
+      return result;
+    } catch (error) {
+      throw new HttpException("No se encontraron cursos de nivel " + level, HttpStatus.BAD_REQUEST);
+    }
   }
 
-  getAll(): Promise<Course[]> {
-      return this.find();
+  async getAll(): Promise<CourseEntity[]> {
+    try {
+      const result = await this.find({
+        relations: {
+          image: true,
+          category: true,
+          // videos: true
+        } });
+      
+      
+      return result;
+    } catch (error) {
+      throw new HttpException("No se encontraron cursos", HttpStatus.BAD_REQUEST);
+    }
   }
 
   deleteById(courseId: string): void{
